@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bitcoin Block Height Counter</title>
+    <style>
+        /* Dark mode background and text colors */
+        body {
+            background-color: #121212;
+            color: #f7931a;
+            /* Bitcoin orange */
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* Title styling */
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        /* Image styling */
+        img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        /* Counter styling (GeoCities-inspired) */
+        .counter {
+            display: inline-block;
+            background-color: #000000;
+            /* Black background */
+            color: #f7931a;
+            /* Bitcoin orange text */
+            font-size: 24px;
+            font-weight: bold;
+            padding: 10px 20px;
+            border: 2px solid #f7931a;
+            /* Border in Bitcoin orange */
+            border-radius: 5px;
+            font-family: 'Courier New', Courier, monospace;
+            /* Retro font */
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Title -->
+    <div>
+        <h1>BITCOIN-OPERATED</h1>
+    </div>
+
+    <!-- Image -->
+    <div>
+        <a href="bitcoin-op.png"><img src="bitcoin-op-lo.png" alt="bitcoin-op"></a>
+    </div>
+
+    <!-- Block Height Counter -->
+    <div style="display: flex; gap: 1rem; justify-content: center; align-items: center;">
+        <div><h3>Block Height:</h3></div>
+        <div id="block-height" class="counter">Loading...</div>
+    </div>
+
+    <script>
+        // Function to fetch the latest Bitcoin block height from Blockstream's API
+        async function fetchBlockHeight() {
+            try {
+                const response = await fetch('https://blockstream.info/api/blocks/tip/height');
+                if (!response.ok) throw new Error('Failed to fetch block height');
+                const blockHeight = await response.text();
+                document.getElementById('block-height').textContent = blockHeight;
+            } catch (error) {
+                console.error('Error fetching block height:', error);
+                document.getElementById('block-height').textContent = 'Error';
+            }
+        }
+
+        // Fetch the block height when the page loads
+        fetchBlockHeight();
+
+        // Refresh the block height periodically (set your desired frequency in milliseconds)
+        setInterval(fetchBlockHeight, 60000); // Example: update every minute
+    </script>
+</body>
+
+</html>
