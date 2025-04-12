@@ -20,8 +20,8 @@ Launch local server
 `npm run start`
 
 ## Utilities used
-https://favicon.io/favicon-converter/
-https://www.adobe.com/express/feature/image/resize
-https://tinypng.com/
-https://github.com/Blockstream/esplora/blob/master/API.md
-https://docs.coingecko.com/v3.0.1/reference/simple-price
+- https://favicon.io/favicon-converter/
+- https://www.adobe.com/express/feature/image/resize
+- https://tinypng.com/
+- https://github.com/Blockstream/esplora/blob/master/API.md
+- https://docs.coingecko.com/v3.0.1/reference/simple-price

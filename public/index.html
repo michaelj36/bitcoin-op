@@ -10,7 +10,10 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
     <style>
-        /* Dark mode background and text colors */
+        html {
+            height: 100%;
+        }
+
         body {
             background-color: #121212;
             color: #f7931a;
@@ -18,6 +21,7 @@
             font-family: Arial, sans-serif;
             text-align: center;
             padding: 20px;
+            height: 100%;
         }
 
         /* Title styling */
@@ -29,7 +33,6 @@
         img {
             max-width: 100%;
             height: auto;
-            margin-bottom: 20px;
         }
 
         /* Counter styling (GeoCities-inspired) */
@@ -41,12 +44,19 @@
             /* Bitcoin orange text */
             font-size: 24px;
             font-weight: bold;
-            padding: 10px 20px;
+            padding: 5px 15px;
             border: 2px solid #f7931a;
             /* Border in Bitcoin orange */
             border-radius: 5px;
             font-family: 'Courier New', Courier, monospace;
             /* Retro font */
+        }
+
+        /* Bitcoin block styling */
+        @keyframes bitcoin-blink {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 1; }
         }
 
         .bitcoin-block {
@@ -58,9 +68,18 @@
         }
 
         .bitcoin-block:first-child {
+            -webkit-animation: bitcoin-blink 3s linear infinite;
+            animation: bitcoin-blink 3s linear infinite;
             border-style: dashed; /* Dashed border for top block */
         }
 
+        @media (prefers-reduced-motion) {
+            .bitcoin-block:first-child {
+                animation: none;
+                opacity: 1 !important;
+            }
+        }
+        
     </style>
 </head>
 
@@ -72,12 +91,12 @@
 
     <!-- Image -->
     <div>
-        <a href="bitcoin-op.png"><img src="bitcoin-op-lo.png" alt="bitcoin-op"></a>
+        <a href="bitcoin-op.png"><img src="bitcoin-op-lo.png" alt="bitcoin-operated machine" style="margin-bottom: 40px;"></a>
     </div>
 
     <!-- Block Height Counter -->
-    <div style="display: flex; gap: 1rem; justify-content: center; align-items: center;">
-        <div><h3>Block Height</h3></div>
+    <div style="display: flex; gap: 1rem; justify-content: center; align-items: center; margin-bottom: 30px;" aria-label="Block Height">
+        <!--div><h3>Block Height</h3></div-->
         <div>
             <div class="bitcoin-block"></div>
             <div class="bitcoin-block"></div>
@@ -88,17 +107,14 @@
     
 
     <!-- Price Counters -->
-    <div style="display: flex; gap: 1rem; justify-content: center; align-items: center;">
-        <div><h3>Market</h3></div>
-        <div>
-            <div class="bitcoin-block"></div>
-        </div>
+    <div style="display: flex; gap: 1rem; justify-content: center; align-items: center; margin-bottom: 30px;" aria-label="Market Cap">
+        <!--div><h3>Market</h3></div-->
+        <div><a href="bitcoin-moneybag.png"><img src="bitcoin-moneybag-lo.png" alt="bitcoin moneybag" width="32" height="32"></a></div>
         <div id="market-cap" class="counter">Loading...</div>
-        <div></div>
-        <div><h3>Moscow Time</h3></div>
-        <div>
-            <div class="bitcoin-block"></div>
-        </div>
+    </div>
+    <div style="display: flex; gap: 1rem; justify-content: center; align-items: center; margin-bottom: 30px;" aria-label="Sats per USD">
+        <!--div><h3>Moscow Time</h3></div-->
+        <div><a href="bitcoin-moscowtime.png"><img src="bitcoin-moscowtime-lo.png" alt="bitcoin moscow time" width="32" height="32"></a></div>
         <div id="sats-per-usd" class="counter">Loading...</div>
     </div>
 
@@ -129,7 +145,7 @@
                 console.log("Bitcoin market data",data);
                 const bitcoin_tusd = Math.round(data.bitcoin.usd_market_cap / 1e10) / 1e2;
                 const sats_per_usd = Math.floor((1 / data.bitcoin.usd) * 1e8);
-                document.getElementById('market-cap').textContent = bitcoin_tusd + " T$";
+                document.getElementById('market-cap').textContent = "$" + bitcoin_tusd + " T";
                 document.getElementById('sats-per-usd').textContent = sats_per_usd;
             } catch (error) {
                 console.error('Error fetching Bitcoin price:', error);
